@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- System Default Color -->
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <!-- Type of color for each cars (Total 13 cars). -->
+    <color name="car1">#00ffdd</color>
+    <color name="car2">#000000</color>
+    <color name="car3">#ff0000</color>
+    <color name="car4">#f55e00</color>
+    <color name="car5">#40ff00</color>
+    <color name="car6">#ffe600</color>
+    <color name="car7">#f7005f</color>
+    <color name="car8">#0073ff</color>
+    <color name="car9">#8800ff</color>
+    <color name="car10">#ff00e1</color>
+    <color name="car11">#103b03</color>
+    <color name="car12">#1a117c</color>
+    <color name="car13">#410628</color>
+</resources>
