@@ -34,10 +34,11 @@ public class MainActivity extends AppCompatActivity
     static String udpReceive = "";
 
     //receive datagram packet's value by udp
-    static String[] heading = new String[9];
-    static String[] past_position = new String[780];
-    static String[] current_position = new String[26];
-    static String[] future_position = new String[780];
+    static String[] heading = new String[1];
+    static String[] hotSpotArea = new String[16];
+    static String[] past_position ;
+    static String[] current_position ;
+    static String[] future_position ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,35 +173,49 @@ public class MainActivity extends AppCompatActivity
                 //divide receive data
                 udpReceive = String.valueOf(msg.obj).trim();
                 String[] udpReceiveArray = udpReceive.split(";");
-                heading = Arrays.copyOfRange(udpReceiveArray, 0, 9);
-                past_position = Arrays.copyOfRange(udpReceiveArray, 9, 789);
-                current_position = Arrays.copyOfRange(udpReceiveArray, 789, 815);
-                future_position = Arrays.copyOfRange(udpReceiveArray, 815, 1595);
+                heading = Arrays.copyOfRange(udpReceiveArray, 0, 1);    //obj. count
+                hotSpotArea = Arrays.copyOfRange(udpReceiveArray, 1, 17);   //hot spot area num.
+
+                int firstBit = 17;
+                int pastEndBit = firstBit + (Integer.parseInt(heading[0]) * 7 * 2) - (Integer.parseInt(heading[0]) * 2);
+                int currentEndBit = pastEndBit + (Integer.parseInt(heading[0]) * 2);
+                int futureEndBit = currentEndBit + (Integer.parseInt(heading[0]) * 7 * 2);
+
+                past_position = Arrays.copyOfRange(udpReceiveArray, 17, pastEndBit);
+                current_position = Arrays.copyOfRange(udpReceiveArray, pastEndBit, currentEndBit);
+                future_position = Arrays.copyOfRange(udpReceiveArray, currentEndBit, futureEndBit);
 
                 Log.i(TAG, "Now in UDP Receiver, original receive : " + udpReceiveArray.length);
                 drawView.invalidate(); //Canvas drawable permission accept
 
-                //Log for specific car's X,Y position from original receive data from udp.
+//                Log for specific car's X,Y position from original receive data from udp.
 //                int a = 0;
-//                for (int i = 0; i < 780; i += 2) {
-//                    if(a == 14)  Log.d(TAG, "[past]blue car pos.:" + past_position[i+1] + "," + past_position[i]);
+//                for (int i = 0; i < Integer.parseInt(heading[0]) * 7 * 2 - (Integer.parseInt(heading[0]) * 2); i += 2) {
+//                    if(a == 0)  Log.d(TAG, "[past]blue car pos.:" + past_position[i+1] + "," + past_position[i]);
 //
-//                    if (a == 24) {
+//                    if (a == (Integer.parseInt(heading[0]) - 1) * 2) {
 //                        a = 0;
 //                    } else {
 //                        a += 2;
 //                    }
 //                }
 //
-//                for (int i = 0; i < 26; i += 2) {
-//                    if(i == 14)  Log.d(TAG, "[current]blue car pos.:" + current_position[i+1] + "," + current_position[i]);
+//                int c = 0;
+//                for (int i = 0; i < Integer.parseInt(heading[0]) * 2; i += 2) {
+//                    if(c == 0)  Log.d(TAG, "[current]blue car pos.:" + current_position[i+1] + "," + current_position[i]);
+//
+//                    if (c == (Integer.parseInt(heading[0]) - 1) * 2) {
+//                        c = 0;
+//                    } else {
+//                        c += 2;
+//                    }
 //                }
 //
 //                int b = 0;
-//                for (int i = 0; i < 780; i += 2) {
-//                    if(b == 14)  Log.d(TAG, "[future]blue car pos.:" + future_position[i+1] + "," + future_position[i]);
+//                for (int i = 0; i < Integer.parseInt(heading[0]) * 7 * 2; i += 2) {
+//                    if(b == 0)  Log.d(TAG, "[future]blue car pos.:" + future_position[i+1] + "," + future_position[i]);
 //
-//                    if (b == 24) {
+//                    if (b == (Integer.parseInt(heading[0]) - 1) * 2) {
 //                        b = 0;
 //                    } else {
 //                        b += 2;

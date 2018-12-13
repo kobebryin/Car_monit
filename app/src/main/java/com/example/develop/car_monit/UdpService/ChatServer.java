@@ -9,7 +9,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
 /**
- * Created by develop on 2018/7/13.
+ * Created by Jimmy Liang on 2018/7/13.
  */
 
 public class ChatServer extends Thread {
